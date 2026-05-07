@@ -1,0 +1,100 @@
+{
+  "name": "quickfilemarker",
+  "displayName": "QuickFileMarker",
+  "description": "Rapidly generate contextual marker files directly from the text editor.",
+  "version": "1.0.0",
+  "publisher": "Gabriel-RABHI",
+  "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gabriel-RABHI/VisualStudio.QuickFileMarker.git"
+  },
+  "keywords": [
+    "marker",
+    "bookmark",
+    "context",
+    "developer tools"
+  ],
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:quickFileMarker.createMarker"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "quickFileMarker.createMarker",
+        "title": "Create Quick Marker..."
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "quickFileMarker.createMarker",
+        "key": "ctrl+m ctrl+m",
+        "mac": "cmd+m cmd+m",
+        "when": "editorTextFocus"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "editorTextFocus",
+          "command": "quickFileMarker.createMarker",
+          "group": "1_modification"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "QuickFileMarker",
+      "properties": {
+        "quickFileMarker.menuItems": {
+          "type": "array",
+          "default": [
+            {
+              "Label": "New Marker",
+              "Flag": "MARKER",
+              "OverwriteLastMarker": false
+            },
+            {
+              "Label": "Replace last Marker",
+              "Flag": "MARKER",
+              "OverwriteLastMarker": true
+            },
+            {
+              "Label": "Show",
+              "Flag": "SHOW",
+              "OverwriteLastMarker": true
+            }
+          ],
+          "description": "List of marker types available in the Quick Pick menu."
+        },
+        "quickFileMarker.markerFileLifetimeInDays": {
+          "type": "number",
+          "default": 30,
+          "description": "Number of days before a marker file is automatically deleted."
+        },
+        "quickFileMarker.maxMarkerFileCount": {
+          "type": "number",
+          "default": 1000,
+          "description": "Maximum number of marker files to keep in the temporary directory."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "18.x",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.1.3"
+  }
+}
