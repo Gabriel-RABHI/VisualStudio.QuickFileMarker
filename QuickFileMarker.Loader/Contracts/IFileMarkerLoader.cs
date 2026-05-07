@@ -1,4 +1,4 @@
-﻿using QuickFileMarker.Loader.Constants;
+using QuickFileMarker.Loader.Constants;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,38 +6,38 @@ using System.Text;
 namespace QuickFileMarker.Loader.Contracts
 {
     /// <summary>
-    /// A Helper class that permit to access the Markers in a structured way.
-    /// It manage the file access to prevent race conditions and stale reads.
-    /// It listen the file system from the RootPathFilters root path.
-    /// THe various published IMarkerGroup instance are stable.
+    /// A Helper class that permits access to the Markers in a structured way.
+    /// It manages the file access to prevent race conditions and stale reads.
+    /// It listens to the file system from the root temporary path.
+    /// The various published IMarkerGroup instances are stable.
     /// </summary>
-    internal interface IFileMarkerLoader : IDisposable
+    public interface IFileMarkerLoader : IDisposable
     {
         /// <summary>
-        /// The Loader instance paths to filter IFileMarker by FilePath property.
+        /// The Loader instance paths used to filter IFileMarker by FilePath property.
         /// </summary>
         string[] RootPathFilters { get; set; }
 
         /// <summary>
-        /// There is two list of Markers : MarkerGroups and OtherGroups. They are filtered by Flag value.
+        /// There are two lists of Markers: MarkerGroups and OtherGroups. They are filtered by Flag value.
         /// The default value is ["MARKER"].
         /// </summary>
         string[] MarkerFlags { get; set; }
 
         /// <summary>
         /// A Marker group is a small list of markers that are clustered by TimeStamp, filtered using the MarkerFlags array.
-        /// To compute the clustering, an average delay is computed in between the Marker.
+        /// To compute the clustering, an average delay is computed between the Markers.
         /// </summary>
-        IEnumerable<IMarkerGroup> MarkerGroups { get; }
+        IEnumerable<IFileMarkerGroup> MarkerGroups { get; }
 
         /// <summary>
-        /// Groups that do not comply with MarkerFlags array.
+        /// Groups that do not comply with the MarkerFlags array.
         /// The "SHOW" Flag value will be here, by default.
         /// </summary>
-        IEnumerable<IMarkerGroup> OtherGroups { get; }
+        IEnumerable<IFileMarkerGroup> OtherGroups { get; }
 
         /// <summary>
-        /// Register a IFileMarkerLoaderListener object instance using Weak Reference.
+        /// Registers an IFileMarkerLoaderListener object instance using a Weak Reference.
         /// </summary>
         /// <param name="listener">The IFileMarkerLoaderListener</param>
         void AddListener(IFileMarkerLoaderListener listener);
@@ -46,7 +46,7 @@ namespace QuickFileMarker.Loader.Contracts
     /// <summary>
     /// A client, observer contract.
     /// </summary>
-    internal interface IFileMarkerLoaderListener
+    public interface IFileMarkerLoaderListener
     {
         void MarkerAddedOrUpdated(IFileMarkerGroup group);
 
@@ -60,12 +60,12 @@ namespace QuickFileMarker.Loader.Contracts
         /// <summary>
         /// An object attached by the client code to manage private states.
         /// </summary>
-        object ClientToken { get; set; }
+        object? ClientToken { get; set; }
 
         T TokenAs<T>() => ClientToken != default ? (T)ClientToken : default;
     }
 
-    internal interface IFileMarker
+    public interface IFileMarker
     {
         IFileMarkerGroup Parent { get; }
 
@@ -80,19 +80,19 @@ namespace QuickFileMarker.Loader.Contracts
         IEnumerable<IFileSection> Sections { get; }
 
         /// <summary>
-        /// Compute if the Marker is valid.
+        /// Computes if the Marker is valid.
         /// </summary>
-        public MarkerValidity Validity { get; }
+        MarkerValidity Validity { get; }
 
         /// <summary>
         /// An object attached by the client code to manage private states.
         /// </summary>
-        object ClientToken { get; set; }
+        object? ClientToken { get; set; }
 
         T TokenAs<T>() => ClientToken != default ? (T)ClientToken : default;
     }
 
-    internal interface IFileSection
+    public interface IFileSection
     {
         IFileMarker Parent { get; }
 
@@ -107,32 +107,32 @@ namespace QuickFileMarker.Loader.Contracts
         int Identifier { get; }
 
         /// <summary>
-        /// The sellected text in the IDE editor.
+        /// The selected text in the IDE editor.
         /// </summary>
         string SellectedText { get; }
 
         /// <summary>
-        /// The sellected text, entire line.
+        /// The selected text, entire line.
         /// </summary>
         string SellectedTextLine { get; }
 
         /// <summary>
-        /// The current carret line number.
+        /// The current caret line number.
         /// </summary>
         string CarretLine { get; }
 
         /// <summary>
-        /// The char number in the carret line.
+        /// The char number in the caret line.
         /// </summary>
         string CharPositionInCarretLine { get; }
 
         /// <summary>
-        /// Sellection state line, if there is a sellection
+        /// Selection start line, if there is a selection.
         /// </summary>
         int SellectionStartLine { get; }
 
         /// <summary>
-        /// Sellection state line, if there is a sellection
+        /// Selection end line, if there is a selection.
         /// </summary>
         int SellectionEndLine { get; }
 
@@ -142,14 +142,14 @@ namespace QuickFileMarker.Loader.Contracts
         DateTime TimeStamp { get; }
 
         /// <summary>
-        /// Compute if the Marker is valid.
+        /// Computes if the Marker is valid.
         /// </summary>
         MarkerValidity Validity { get; }
 
         /// <summary>
         /// An object attached by the client code to manage private states.
         /// </summary>
-        object ClientToken { get; set; }
+        object? ClientToken { get; set; }
 
         T TokenAs<T>() => ClientToken != default ? (T)ClientToken : default;
     }
