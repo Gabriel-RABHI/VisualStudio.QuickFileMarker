@@ -20,11 +20,13 @@ namespace QuickFileMarker
         private readonly AsyncPackage package;
         private ConfigurationRecord currentConfig;
         private OleMenuCommandService commandService;
+        private DTE2 _dte;
 
-        private QuickFileMarkerCommand(AsyncPackage package, OleMenuCommandService commandService)
+        private QuickFileMarkerCommand(AsyncPackage package, OleMenuCommandService commandService, DTE2 dte)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             this.commandService = commandService;
+            this._dte = dte;
             
             this.currentConfig = QuickFileMarkerConfigurationManager.LoadConfiguration();
 
@@ -38,8 +40,7 @@ namespace QuickFileMarker
                 menuItem.BeforeQueryStatus += (s, e) => {
                     ThreadHelper.ThrowIfNotOnUIThread();
                     var cmd = (OleMenuCommand)s;
-                    var dte = ServiceProvider.GetService(typeof(DTE)) as DTE2;
-                    cmd.Visible = dte?.ActiveDocument != null;
+                    cmd.Visible = _dte?.ActiveDocument != null;
                 };
 
                 commandService.AddCommand(menuItem);
@@ -53,15 +54,82 @@ namespace QuickFileMarker
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
             var commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new QuickFileMarkerCommand(package, commandService);
+            var dte = await package.GetServiceAsync(typeof(DTE)) as DTE2;
+            Instance = new QuickFileMarkerCommand(package, commandService, dte);
+
+            try
+            {
+                if (dte != null)
+                {
+                    Instance.ApplyShortcuts(dte);
+                }
+            } catch (Exception ex)
+            {
+                Console.WriteLine("Error in InitializeAsync: " + ex.Message);
+            }
+        }
+
+        private void ApplyShortcuts(DTE2 dte)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            string guidString = CommandSet.ToString("B").ToUpper();
+
+            for (int i = 0; i < currentConfig.MenuItems.Count; i++)
+            {
+                var shortcut = currentConfig.MenuItems[i].Shortcut;
+                if (shortcut == null || string.IsNullOrEmpty(shortcut.Key)) continue;
+
+                string binding = "Global::";
+                if (!string.IsNullOrEmpty(shortcut.PrimaryModifier))
+                    binding += shortcut.PrimaryModifier + "+";
+                if (!string.IsNullOrEmpty(shortcut.SecondaryModifier))
+                    binding += shortcut.SecondaryModifier + "+";
+                binding += shortcut.Key;
+
+                Command cmd = null;
+                try
+                {
+                    cmd = dte.Commands.Item(guidString, CommandId + i);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Step 1 failed (Retrieving command): " + ex.Message);
+                    continue;
+                }
+
+                if (cmd != null)
+                {
+                    object[] currentBindings = null;
+                    try
+                    {
+                        currentBindings = cmd.Bindings as object[];
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Step 2 failed (Getting bindings): " + ex.Message);
+                        continue;
+                    }
+
+                    if (currentBindings == null || currentBindings.Length == 0 || currentBindings[0].ToString() != binding)
+                    {
+                        try
+                        {
+                            cmd.Bindings = new object[] { binding };
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Step 3 failed (Setting bindings to '" + binding + "'): " + ex.Message);
+                        }
+                    }
+                }
+            }
         }
 
         private void Execute(MenuRecord menuConfig)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            var dte = ServiceProvider.GetService(typeof(DTE)) as DTE2;
-            if (dte?.ActiveDocument == null) return;
+            if (_dte?.ActiveDocument == null) return;
 
             // Reload configuration to ensure we have latest cleanup parameters
             var liveConfig = QuickFileMarkerConfigurationManager.LoadConfiguration();
@@ -69,8 +137,8 @@ namespace QuickFileMarker
             // Clean up old markers
             QuickFileMarkerConfigurationManager.CleanUpTempDirectory(liveConfig);
 
-            var selection = (TextSelection)dte.ActiveDocument.Selection;
-            string filePath = dte.ActiveDocument.FullName;
+            var selection = (TextSelection)_dte.ActiveDocument.Selection;
+            string filePath = _dte.ActiveDocument.FullName;
 
             int startLine = selection.TopPoint.Line;
             int endLine = selection.BottomPoint.Line;

@@ -6,7 +6,7 @@
   </Configurations>
   <Project Path="QuickFileMarker.Loader.Tests/QuickFileMarker.Loader.Tests.csproj" />
   <Project Path="QuickFileMarker.Loader/QuickFileMarker.Loader.csproj" />
-  <Project Path="QuickFileMarker/QuickFileMarker.csproj">
+  <Project Path="QuickFileMarker/QuickFileMarker.csproj" Id="32918167-b7d3-4a49-8594-2ff3ef779c65">
     <Platform Solution="*|arm64" Project="arm64" />
     <Platform Solution="*|x86" Project="x86" />
   </Project>

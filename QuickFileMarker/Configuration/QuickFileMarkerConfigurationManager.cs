@@ -34,7 +34,11 @@ namespace QuickFileMarker.Configuration
                 try
                 {
                     string json = File.ReadAllText(ConfigFilePath);
-                    return JsonConvert.DeserializeObject<ConfigurationRecord>(json) ?? new ConfigurationRecord();
+                    var settings = new JsonSerializerSettings
+                    {
+                        ObjectCreationHandling = ObjectCreationHandling.Replace
+                    };
+                    return JsonConvert.DeserializeObject<ConfigurationRecord>(json, settings) ?? new ConfigurationRecord();
                 }
                 catch
                 {

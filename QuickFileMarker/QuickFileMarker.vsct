@@ -11,13 +11,114 @@
     </Groups>
 
     <Buttons>
-      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMyDynamicStartCommand" priority="0x0100" type="Button">
+      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMarkerCommand0" priority="0x0100" type="Button">
         <Parent guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" />
-        <CommandFlag>DynamicItemStart</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
         <CommandFlag>TextChanges</CommandFlag>
         <Strings>
           <ButtonText>Quick Marker</ButtonText>
+          <CanonicalName>QuickFileMarker.Command0</CanonicalName>
+          <LocCanonicalName>QuickFileMarker.Command0</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMarkerCommand1" priority="0x0101" type="Button">
+        <Parent guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Quick Marker</ButtonText>
+          <CanonicalName>QuickFileMarker.Command1</CanonicalName>
+          <LocCanonicalName>QuickFileMarker.Command1</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMarkerCommand2" priority="0x0102" type="Button">
+        <Parent guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Quick Marker</ButtonText>
+          <CanonicalName>QuickFileMarker.Command2</CanonicalName>
+          <LocCanonicalName>QuickFileMarker.Command2</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMarkerCommand3" priority="0x0103" type="Button">
+        <Parent guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Quick Marker</ButtonText>
+          <CanonicalName>QuickFileMarker.Command3</CanonicalName>
+          <LocCanonicalName>QuickFileMarker.Command3</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMarkerCommand4" priority="0x0104" type="Button">
+        <Parent guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Quick Marker</ButtonText>
+          <CanonicalName>QuickFileMarker.Command4</CanonicalName>
+          <LocCanonicalName>QuickFileMarker.Command4</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMarkerCommand5" priority="0x0105" type="Button">
+        <Parent guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Quick Marker</ButtonText>
+          <CanonicalName>QuickFileMarker.Command5</CanonicalName>
+          <LocCanonicalName>QuickFileMarker.Command5</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMarkerCommand6" priority="0x0106" type="Button">
+        <Parent guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Quick Marker</ButtonText>
+          <CanonicalName>QuickFileMarker.Command6</CanonicalName>
+          <LocCanonicalName>QuickFileMarker.Command6</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMarkerCommand7" priority="0x0107" type="Button">
+        <Parent guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Quick Marker</ButtonText>
+          <CanonicalName>QuickFileMarker.Command7</CanonicalName>
+          <LocCanonicalName>QuickFileMarker.Command7</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMarkerCommand8" priority="0x0108" type="Button">
+        <Parent guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Quick Marker</ButtonText>
+          <CanonicalName>QuickFileMarker.Command8</CanonicalName>
+          <LocCanonicalName>QuickFileMarker.Command8</LocCanonicalName>
+        </Strings>
+      </Button>
+      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMarkerCommand9" priority="0x0109" type="Button">
+        <Parent guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Quick Marker</ButtonText>
+          <CanonicalName>QuickFileMarker.Command9</CanonicalName>
+          <LocCanonicalName>QuickFileMarker.Command9</LocCanonicalName>
         </Strings>
       </Button>
     </Buttons>
@@ -28,7 +129,16 @@
 
     <GuidSymbol name="guidQuickFileMarkerCmdSet" value="{85a06981-0a56-4b2f-98c5-6e01a886f4a8}">
       <IDSymbol name="MyEditorContextMenuGroup" value="0x1020" />
-      <IDSymbol name="cmdidMyDynamicStartCommand" value="0x0100" />
+      <IDSymbol name="cmdidMarkerCommand0" value="0x0100" />
+      <IDSymbol name="cmdidMarkerCommand1" value="0x0101" />
+      <IDSymbol name="cmdidMarkerCommand2" value="0x0102" />
+      <IDSymbol name="cmdidMarkerCommand3" value="0x0103" />
+      <IDSymbol name="cmdidMarkerCommand4" value="0x0104" />
+      <IDSymbol name="cmdidMarkerCommand5" value="0x0105" />
+      <IDSymbol name="cmdidMarkerCommand6" value="0x0106" />
+      <IDSymbol name="cmdidMarkerCommand7" value="0x0107" />
+      <IDSymbol name="cmdidMarkerCommand8" value="0x0108" />
+      <IDSymbol name="cmdidMarkerCommand9" value="0x0109" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>

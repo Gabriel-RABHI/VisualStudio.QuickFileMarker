@@ -13,7 +13,7 @@ namespace QuickFileMarker.Configuration
     internal class ConfigurationRecord
     {
         public List<MenuRecord> MenuItems { get; set; } = new List<MenuRecord> {
-            new MenuRecord() { Label = "New Marker" },
+            new MenuRecord() { Label = "New Marker", Shortcut = new ShortcutRecord() { Key = "M", PrimaryModifier = "Ctrl", SecondaryModifier = "Shift" } },
             new MenuRecord() { Label = "Replace last Marker", OverwriteLastMarker = true },
             new MenuRecord() { Label = "Show Marker", Flag = "SHOW" }
         };
