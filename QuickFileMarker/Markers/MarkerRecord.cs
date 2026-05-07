@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace QuickFileMarker.Markers
 {
+    /// <summary>
+    /// File marker record, saved in a json file "marker-0000001.json" (the number is incremented) in a "FileMarkers" standard application temporary directory.
+    /// </summary>
     internal class MarkerRecord
     {
+        /// <summary>
+        /// The flag from the menu configuration flag
+        /// </summary>
+        public string Flag { get; set; } = "MARKER";
+
         /// <summary>
         /// Absolute path of the marked file.
         /// </summary>
