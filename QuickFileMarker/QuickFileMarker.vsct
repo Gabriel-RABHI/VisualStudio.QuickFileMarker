@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+
+  <Commands package="guidQuickFileMarkerPackage">
+    <Groups>
+      <Group guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN" />
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidQuickFileMarkerCmdSet" id="cmdidMyDynamicStartCommand" priority="0x0100" type="Button">
+        <Parent guid="guidQuickFileMarkerCmdSet" id="MyEditorContextMenuGroup" />
+        <CommandFlag>DynamicItemStart</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <CommandFlag>TextChanges</CommandFlag>
+        <Strings>
+          <ButtonText>Quick Marker</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="guidQuickFileMarkerPackage" value="{8cab19ff-88d5-4754-b80f-f97cba1134ab}" />
+
+    <GuidSymbol name="guidQuickFileMarkerCmdSet" value="{85a06981-0a56-4b2f-98c5-6e01a886f4a8}">
+      <IDSymbol name="MyEditorContextMenuGroup" value="0x1020" />
+      <IDSymbol name="cmdidMyDynamicStartCommand" value="0x0100" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
