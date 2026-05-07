@@ -14,7 +14,7 @@ namespace QuickFileMarker.Configuration
     {
         public List<MenuRecord> Menus { get; set; } = new List<MenuRecord> {
             new MenuRecord() { Label = "Create Marker" },
-            new MenuRecord() { Label = "Replace last Marker", OverwriteLast = true },
+            new MenuRecord() { Label = "Replace last Marker", OverwriteLastMarker = true },
             new MenuRecord() { Label = "Show Marker", Flag = "SHOW" }
         };
 
@@ -31,7 +31,7 @@ namespace QuickFileMarker.Configuration
 
         public ShortcutRecord Shortcut { get; set; } = new ShortcutRecord();
 
-        public bool OverwriteLast { get; set; } = false;
+        public bool OverwriteLastMarker { get; set; } = false;
     }
 
     internal class ShortcutRecord
