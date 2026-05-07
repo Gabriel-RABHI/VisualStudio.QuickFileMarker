@@ -12,8 +12,8 @@ namespace QuickFileMarker.Configuration
     /// </summary>
     internal class ConfigurationRecord
     {
-        public List<MenuRecord> Menus { get; set; } = new List<MenuRecord> {
-            new MenuRecord() { Label = "Create Marker" },
+        public List<MenuRecord> MenuItems { get; set; } = new List<MenuRecord> {
+            new MenuRecord() { Label = "New Marker" },
             new MenuRecord() { Label = "Replace last Marker", OverwriteLastMarker = true },
             new MenuRecord() { Label = "Show Marker", Flag = "SHOW" }
         };
