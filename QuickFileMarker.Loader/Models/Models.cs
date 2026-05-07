@@ -68,37 +68,48 @@ namespace QuickFileMarker.Loader.Models
         public DateTime TimeStamp { get; set; }
         public object? ClientToken { get; set; }
 
+        private MarkerValidity _cachedValidity = MarkerValidity.MissingFile;
+        private DateTime _lastCheckedTime = DateTime.MinValue;
+
         public MarkerValidity Validity
         {
             get
             {
                 string path = Parent.FilePath;
-                if (!File.Exists(path)) return MarkerValidity.MissingFile;
+                var fileInfo = new FileInfo(path);
+
+                if (!fileInfo.Exists)
+                {
+                    _lastCheckedTime = DateTime.MinValue;
+                    _cachedValidity = MarkerValidity.MissingFile;
+                    return _cachedValidity;
+                }
+
+                if (fileInfo.LastWriteTimeUtc == _lastCheckedTime)
+                {
+                    return _cachedValidity;
+                }
 
                 try
                 {
                     var lines = File.ReadAllLines(path);
                     if (!int.TryParse(CarretLine, out int lineIdx) || lineIdx < 1 || lineIdx > lines.Length)
-                        return MarkerValidity.RangeOverflow;
+                        _cachedValidity = MarkerValidity.RangeOverflow;
+                    else if (!string.IsNullOrEmpty(SellectedTextLine) && !lines[lineIdx - 1].Contains(SellectedTextLine.Trim()))
+                        _cachedValidity = MarkerValidity.SellectedTextLineMissing;
+                    else if (!string.IsNullOrEmpty(SellectedText) && !string.Join("\n", lines).Contains(SellectedText))
+                        _cachedValidity = MarkerValidity.SellectedTextMissing;
+                    else
+                        _cachedValidity = MarkerValidity.Valid;
 
-                    // 1-based line index from VS typically
-                    string fileLine = lines[lineIdx - 1];
-
-                    if (!string.IsNullOrEmpty(SellectedTextLine) && !fileLine.Contains(SellectedTextLine.Trim()))
-                        return MarkerValidity.SellectedTextLineMissing;
-
-                    if (!string.IsNullOrEmpty(SellectedText))
-                    {
-                        string allText = File.ReadAllText(path);
-                        if (!allText.Contains(SellectedText))
-                            return MarkerValidity.SellectedTextMissing;
-                    }
-
-                    return MarkerValidity.Valid;
+                    _lastCheckedTime = fileInfo.LastWriteTimeUtc;
+                    return _cachedValidity;
                 }
                 catch
                 {
-                    return MarkerValidity.MissingFile;
+                    _lastCheckedTime = DateTime.MinValue;
+                    _cachedValidity = MarkerValidity.MissingFile;
+                    return _cachedValidity;
                 }
             }
         }
